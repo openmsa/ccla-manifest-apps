@@ -30,7 +30,9 @@
   <example/>
   <command name="IMPORT">
     <parser>
-      <section/>
+      <section>
+        <regexp>@^\s \s*$@</regexp>
+      </section>
       <lines/>
     </parser>
   </command>
