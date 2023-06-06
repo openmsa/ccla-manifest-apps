@@ -1,0 +1,133 @@
+---
+# STATEFULSET-EVIDENCEDB
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-evidencedb
+  labels:
+    product: asbackend
+    group: persistence
+    pod: mongodb
+    app: evidencedb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      product: asbackend
+      group: persistence
+      pod: mongodb
+      app: evidencedb
+  serviceName: evidencedb
+  template:
+    metadata:
+      labels:
+        product: asbackend
+        group: persistence
+        pod: mongodb
+        app: evidencedb
+    spec:
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: evidencedb
+        effect: NoExecute
+      containers:
+      - name: container-evidencedb
+        image: mongo:4.2
+        command:
+        - /entrypoint.sh
+        resources:
+          requests:
+            cpu: "2000m"
+            memory: "10Gi"
+          limits:
+            cpu: "4000m"
+            memory: "10Gi"
+        envFrom:
+        - secretRef:
+            name: secret-evidencedb-dumpster-creds
+        - secretRef:
+            name: secret-evidencedb-guihelper-creds
+        - secretRef:
+            name: secret-evidencedb-mview-creds
+        - secretRef:
+            name: secret-evidencedb-pruners-creds
+        - secretRef:
+            name: secret-evidencedb-replicator-creds
+        - secretRef:
+            name: secret-evidencedb-root-creds
+        - secretRef:
+            name: secret-evidencedb-stalker-creds
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: $(EVIDENCEDB_ROOT_USERNAME)
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: $(EVIDENCEDB_ROOT_PASSWORD)
+        ports:
+        - name: mongodb
+          containerPort: 27017
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /setup.sh
+        startupProbe:
+          exec:
+            command:
+            - mongo
+            - --tls
+            - --tlsAllowInvalidCertificates
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 60
+        livenessProbe:
+          tcpSocket:
+            port: 27017
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --tls
+            - --tlsAllowInvalidCertificates
+            - --eval
+            - "db.adminCommand('ping')"
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+        volumeMounts:
+        - name: sys
+          mountPath: /rootfs/sys
+        - name: evidencedb-data-volume
+          mountPath: /data/evidencedb
+        - name: entrypoint-sh
+          mountPath: /entrypoint.sh
+          subPath: entrypoint.sh
+          readOnly: true
+        - name: setup-sh
+          mountPath: /setup.sh
+          subPath: setup.sh
+          readOnly: true
+      volumes:
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: evidencedb-data-volume
+        persistentVolumeClaim:
+          claimName: aspod-evidencedb-volume-claim
+      - name: entrypoint-sh
+        configMap:
+          name: configmap-evidencedb-entrypoint
+          defaultMode: 0311
+      - name: setup-sh
+        configMap:
+          name: configmap-evidencedb-setup
+          defaultMode: 0311
+
