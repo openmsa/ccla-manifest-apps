@@ -1,0 +1,22 @@
+---
+# SERVICE-MVIEW
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-mview
+  labels:
+    product: asbackend
+    group: feed
+    pod: mview
+    app: mview
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: mview
+  ports:
+    - protocol: TCP
+      name: mview
+      port: 4370
+
