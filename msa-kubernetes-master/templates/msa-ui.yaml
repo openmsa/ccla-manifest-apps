@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: msa-ui
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-ui
+spec:
+  replicas: {{ .Values.msa_ui.replicas }}
+  selector:
+    matchLabels:
+      deployment: msa-ui
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: msa-ui
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - env:
+            - name: FEATURE_ADMIN
+              value: "true"
+            - name: FEATURE_AI_ML
+              value: "true"
+            - name: FEATURE_ALARMS
+              value: "true"
+            - name: FEATURE_BPM
+              value: "true"
+            - name: FEATURE_CONNECTION_STATUS
+              value: "true"
+            - name: FEATURE_EDIT_VARIABLES_IN_MICROSERVICE_CONSOLE
+              value: "true"
+            - name: FEATURE_LICENCE
+              value: "true"
+            - name: FEATURE_MICROSERVICE_BULK_OPERATION
+              value: "true"
+            - name: FEATURE_MONITORING_PROFILES
+              value: "true"
+            - name: FEATURE_PERMISSION_PROFILES
+              value: "true"
+            - name: FEATURE_PERMISSION_PROFILE_LABELS
+              value: "false"
+            - name: FEATURE_PROFILE_AUDIT_LOGS
+              value: "true"
+            - name: FEATURE_REPOSITORY
+              value: "true"
+            - name: FEATURE_TOPOLOGY
+              value: "true"
+            - name: FEATURE_WORKFLOW_OWNER
+              value: "false"
+          image: "{{ .Values.msa_ui.image }}"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - curl --fail http://localhost:8080
+          name: msa-ui
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: msa-ui
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-ui
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    deployment: msa-ui
+    {{- include "msa.selectorLabels" . | nindent 4 }}
