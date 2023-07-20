@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: aspod-alertdb-volume-claim
+  labels:
+    product: asbackend
+    group: persistence
+    pod: mongodb
+    app: alertdb
+spec:
+  storageClassName: "azure-disk-xfs"
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Gi
+
