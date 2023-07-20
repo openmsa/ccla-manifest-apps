@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: msa-dev
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-dev
+spec:
+  replicas: {{ .Values.msa_dev.replicas }}
+  selector:
+    matchLabels:
+      deployment: msa-dev
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: msa-dev
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: install-libraries
+          image: "{{ .Values.msa_dev.image }}"
+          command: ['sh', '-c', "usr/bin/install_libraries.sh all"]
+          volumeMounts:
+            - mountPath: /opt/ubi-jentreprise/generated/conf
+              name: msa-api
+            - mountPath: /opt/devops/
+              name: msa-dev
+            - mountPath: /opt/fmc_entities
+              name: msa-entities
+            - mountPath: /opt/fmc_repository
+              name: msa-repository
+      containers:
+        - image: "{{ .Values.msa_dev.image }}"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - test -f /usr/bin/install_libraries.sh || echo false
+          name: msa-dev
+          resources: {}
+          volumeMounts:
+            - mountPath: /opt/ubi-jentreprise/generated/conf
+              name: msa-api
+            - mountPath: /opt/devops/
+              name: msa-dev
+            - mountPath: /opt/fmc_entities
+              name: msa-entities
+            - mountPath: /opt/fmc_repository
+              name: msa-repository
+      volumes:
+        - name: msa-api
+          persistentVolumeClaim:
+            claimName: msa-api
+        - name: msa-dev
+          persistentVolumeClaim:
+            claimName: msa-dev
+        - name: msa-entities
+          persistentVolumeClaim:
+            claimName: msa-entities
+        - name: msa-repository
+          persistentVolumeClaim:
+            claimName: msa-repository
