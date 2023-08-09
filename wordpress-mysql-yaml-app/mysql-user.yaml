@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql-user-secret
-type: kubernetes.io/basic-auth
-stringData:
-  username: wordpress
-  password: wordpress-pass
