@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: msa-es
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-es
+spec:
+  replicas: {{ .Values.msa_es.replicas }}
+  selector:
+    matchLabels:
+      deployment: msa-es
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: msa-es
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - env:
+            - name: ES_CREDENTIALS
+              value: c3VwZXJ1c2VyOnheWnl1R002fnU9K2ZZMkc=
+            - name: ES_JAVA_OPTS
+              value: -Xms512m -Xmx1024m
+            - name: bootstrap.memory_lock
+              value: "true"
+            - name: discovery.type
+              value: single-node
+            - name: script.painless.regex.enabled
+              value: "true"
+          image: "{{ .Values.msa_es.image }}"
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -cs
+                - 'test -f /home/install/init-done && curl -s -XGET -H ''Authorization: Basic c3VwZXJ1c2VyOnheWnl1R002fnU9K2ZZMkc=''  ''http://localhost:9200/_cluster/health?pretty'' | grep -q ''status.*green'' || exit 1'
+            initialDelaySeconds: 60
+            periodSeconds: 60
+          name: msa-es
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "100m"
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: msa-es
+      volumes:
+        - name: msa-es
+          persistentVolumeClaim:
+            claimName: msa-es
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: msa-es
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-es
+spec:
+  ports:
+    - name: "9200"
+      port: 9200
+      targetPort: 9200
+  selector:
+    deployment: msa-es
+    {{- include "msa.selectorLabels" . | nindent 4 }}
