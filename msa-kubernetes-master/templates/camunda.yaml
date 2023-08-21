@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: camunda
+    {{- include "msa.labels" . | nindent 4 }}
+  name: camunda
+spec:
+  replicas: {{ .Values.msa_camunda.replicas }}
+  selector:
+    matchLabels:
+      deployment: camunda
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: camunda
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: check-db-ready
+          image: postgres:9.6.5
+          command: ['sh', '-c', 
+            'until pg_isready -h db -p 5432; 
+            do echo waiting for database; sleep 2; done;']
+      containers:
+        - env:
+            - name: DB_DRIVER
+              value: org.postgresql.Driver
+            - name: DB_PASSWORD
+              value: camunda
+            - name: DB_URL
+              value: jdbc:postgresql://db:5432/process-engine
+            - name: DB_USERNAME
+              value: camunda
+            - name: DB_VALIDATE_ON_BORROW
+              value: "true"
+            - name: WAIT_FOR
+              value: db:5432
+            - name: WAIT_FOR_TIMEOUT
+              value: "60"
+          image: "{{ .Values.msa_camunda.image }}"
+          name: msa-camunda
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: msa-camunda
+    {{- include "msa.labels" . | nindent 4 }}
+  name: camunda
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    deployment: camunda
+    {{- include "msa.selectorLabels" . | nindent 4 }}
