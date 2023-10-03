@@ -1,0 +1,72 @@
+# defaultStorageClassName: <default-storage-class-name>
+
+imagePullSecrets:
+  - name: reg-cred
+
+imageCredentials:
+  registry: https://index.docker.io/v1/
+  username: _DOCKER_USERNAME_
+  password: _DOCKER_PASSWORD_
+  email: _DOCKER_EMAIL_
+
+msa_camunda:
+  image: ubiqube/msa2-camunda:23335a0df397d4bc3531366223cd5a239688ee0d
+  replicas: 1
+
+msa_db:
+  image: ubiqube/msa2-db:c5a834e55c9508434758d7947635640fa978aa1d
+  hostPath: /shared/database
+
+msa_api:
+  image: ubiqube/msa2-api:9faa935a68f6170db74c3ab5fa9c4fce896ac40a
+  replicas: 2
+
+msa_bud:
+  image: ubiqube/msa2-bud:04590d19dafe4acc2742c9a365e9dbdb80e45dfc
+  replicas: 1
+
+msa_alarm:
+  image: ubiqube/msa2-alarm:4951e9302d0cffbc00c4a8b3ec2343aa3ebc680f
+  replicas: 1
+
+msa_cerebro:
+  image: ubiqube/msa2-cerebro:914750e000db1343d9972bfa6652da1efe4aa32f
+  replicas: 1
+
+msa_es:
+  image: ubiqube/msa2-es:0bdbe159f733c75a5ea0696420ded038c87b5d6c
+  replicas: 1
+
+msa_dev:
+  image: ubiqube/msa2-linuxdev:d0055a9eb5f35669f88ed06b92005efe3b1c9989
+  replicas: 1
+
+msa_front:
+  ingress: false  # When set to true, requires a Ingress Controller 
+  loadbalancer: true
+  image: ubiqube/msa2-front:ac1c1f9c61175a8231894a06a49035fd67f8a37f
+  replicas: 2
+
+msa_kibana:
+  image: ubiqube/msa2-kibana:b5a0a64970f780ffddaf884f6bbff149431f0026
+  replicas: 1
+
+msa_monitoring:
+  image: ubiqube/msa2-monitoring:8b9ec8698d5825866acd10adcd5d6a728a9c41c1
+  replicas: 1
+
+msa_rsyslog:
+  image: ubiqube/msa2-rsyslog:c7981110f0ff1ee153199786f4abf3c8f5e49db7
+  replicas: 1
+
+msa_sms:
+  image: ubiqube/msa2-sms:1be0eff79f6b8bc076526bcbb1c8f395ac23d4bf
+  replicas: 1
+
+msa_ui:
+  image: ubiqube/msa2-ui:d8df7de0c6c3146d0df50ebeffa5405424b10db8
+  replicas: 2
+
+msa_linuxme:
+  image: ubiqube/msa2-linuxme:e84bc462bf01d4956c4a1895b66507d4ba47a227
+  replicas: 1
