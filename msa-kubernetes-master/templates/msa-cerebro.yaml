@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: msa-cerebro
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-cerebro
+spec:
+  replicas: {{ .Values.msa_cerebro.replicas }}
+  selector:
+    matchLabels:
+      deployment: msa-cerebro
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: msa-cerebro
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - command:
+            - /opt/cerebro/bin/cerebro
+            - -Dhosts.0.host=http://msa-es:9200
+          env:
+            - name: AUTH_TYPE
+              value: basic
+            - name: BASIC_AUTH_PWD
+              value: N@X{M4tfw'5%)+35
+            - name: BASIC_AUTH_USER
+              value: cerebro
+          image: "{{ .Values.msa_cerebro.image }}"
+          name: msa-cerebro
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: msa-cerebro
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-cerebro
+spec:
+  ports:
+    - name: "9000"
+      port: 9000
+      targetPort: 9000
+  selector:
+    deployment: msa-cerebro
+    {{- include "msa.selectorLabels" . | nindent 4 }}
