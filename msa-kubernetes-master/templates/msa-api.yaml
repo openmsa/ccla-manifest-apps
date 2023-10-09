@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: msa-api
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-api
+spec:
+  replicas: {{ .Values.msa_api.replicas }}
+  selector:
+    matchLabels:
+      deployment: msa-api
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: msa-api
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - env:
+          - name: ES_CREDENTIALS
+            value: c3VwZXJ1c2VyOnheWnl1R002fnU9K2ZZMkc=
+          - name: UBIQUBE_CAPTCHA_SECRET_KEY
+            value: 6Ld2zF4dAAAAABWD9Q6QAhBql_CIynUeVKaTiBgT
+        image: "{{ .Values.msa_api.image }}"
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - curl --fail http://localhost:8480
+          initialDelaySeconds: 60
+        name: msa-api
+        resources:
+          requests:
+            memory: "1.2Gi"
+            cpu: "100m"
+        volumeMounts:
+          - mountPath: /opt/devops/
+            name: msa-dev
+          - mountPath: /opt/fmc_entities
+            name: msa-entities
+          - mountPath: /opt/fmc_repository
+            name: msa-repository
+          - mountPath: /opt/rrd
+            name: rrd-repository
+          - mountPath: /opt/wildfly/logs/processLog
+            name: msa-api-logs
+          - mountPath: /etc/pki/jentreprise
+            name: msa-api-keystore
+      volumes:
+      - name: msa-dev
+        persistentVolumeClaim:
+          claimName: msa-dev
+      - name: msa-entities
+        persistentVolumeClaim:
+          claimName: msa-entities
+      - name: msa-repository
+        persistentVolumeClaim:
+          claimName: msa-repository
+      - name: rrd-repository
+        persistentVolumeClaim:
+          claimName: rrd-repository
+      - name: msa-api-logs
+        persistentVolumeClaim:
+          claimName: msa-api-logs
+      - name: msa-api-keystore
+        persistentVolumeClaim:
+          claimName: msa-api-keystore
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: msa-api
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-api
+spec:
+  ports:
+    - name: "8480"
+      port: 8480
+      targetPort: 8480
+    - name: "8787"
+      port: 8787
+      targetPort: 8787
+  selector:
+    deployment: msa-api
+    {{- include "msa.selectorLabels" . | nindent 4 }}
