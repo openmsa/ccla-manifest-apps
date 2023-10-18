@@ -32,5 +32,5 @@ msa2_svn_pvc            = "100Mi"
 
 
 # Kubernetes cluster terraform state file path
-cluster_terraform_remote_state = ""
+#cluster_terraform_remote_state = ""
 
