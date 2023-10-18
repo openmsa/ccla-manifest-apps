@@ -11,13 +11,13 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "aks" {
-  backend = "local"
+# data "terraform_remote_state" "aks" {
+#   backend = "local"
 
-  config = {
-    path = var.cluster_terraform_remote_state 
-  }
-}
+#   config = {
+#     path = var.cluster_terraform_remote_state 
+#   }
+# }
 
 # Retrieve AKS cluster information
 # provider "azurerm" {

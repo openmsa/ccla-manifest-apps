@@ -29,6 +29,6 @@ variable "msa2_rrd_repository_pvc" {}
 variable "msa2_sms_logs_pvc" {}
 variable "msa2_svn_pvc" {}
 
-variable "cluster_terraform_remote_state" {
-  description = "kubernetes cluster terraform state file path"
-}
+# variable "cluster_terraform_remote_state" {
+#   description = "kubernetes cluster terraform state file path"
+# }
