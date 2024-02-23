@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    deployment: msa-kibana
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-kibana
+spec:
+  replicas: {{ .Values.msa_kibana.replicas }}
+  selector:
+    matchLabels:
+      deployment: msa-kibana
+      {{- include "msa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        deployment: msa-kibana
+        {{- include "msa.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - env:
+            - name: ELASTICSEARCH_HOSTS
+              value: http://msa-es:9200
+            - name: ELASTICSEARCH_URL
+              value: http://msa-es:9200
+            - name: ES_CREDENTIALS
+              value: c3VwZXJ1c2VyOnheWnl1R002fnU9K2ZZMkc=
+          image: "{{ .Values.msa_kibana.image }}"
+          name: msa-kibana
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 5601
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: msa-kibana
+    {{- include "msa.labels" . | nindent 4 }}
+  name: msa-kibana
+spec:
+  ports:
+    - name: "5601"
+      port: 5601
+      targetPort: 5601
+  selector:
+    deployment: msa-kibana
+    {{- include "msa.selectorLabels" . | nindent 4 }}
