@@ -1,0 +1,11 @@
+
+<svg id="arc-left" x="0px" y="0px" viewBox="0 0 720 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="enable-background:new 0 0 720 80;" xml:space="preserve">
+	<style type="text/css">
+	    .arc-top {fill: transparent;}
+	    .arc-bottom {fill: #151B22;}
+	</style>
+	
+	<path class="arc-top" d="M720 80V0C480 102 240 104 0 0V80H720Z"/>
+	<path class="arc-bottom" d="M0 3.24457e-05L720 0C480 102 240 104 0 3.24457e-05Z" />
+
+</svg>

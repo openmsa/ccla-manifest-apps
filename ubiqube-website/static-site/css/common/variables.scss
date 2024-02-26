@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+// General
+// $icomoon-font-path: "../icons/css/icons/fonts" !default;
+$icomoon-font-family: 'Line Awesome Free' !default;
+
+
+
+
+$default-padding:1.0rem;
+
+
+// Font
+$base-font-size: 1rem !default;
+$base-font-size-mobile: 0.875rem !default;
+$base-line-height:1.0rem !default;
+$base-font-family: 'Space Grotesk', Sans-Serif !default;
+$base-font-color: #353535 !default;
+$base-background: #FFFFFF !default;
+$base-title-family: 'Space Grotesk', Sans-Serif !default;
+
+
+// Inputs, Select & Textarea
+$base-input-border: #808285 !default;
+$base-input-color: $base-font-color !default;
+$base-input-background: #FFFFFF !default;
+$base-input-border-hover: darken($base-input-border,20%) !default;
+$border-radius: 0.5rem !default;
+
+// Color
+$warm-grey: #F3F3F3 !default;
+$dark-grey: #151B22 !default;
+$white: #FFFFFF !default;
+$black: #151B22 !default;
+$light-grey: #F3F5F8 !default;
+
+
+$red: #E1655A !default;
+$green: #34C186 !default; //#2CA573
+
+
+// Navigation
+$nav-link-color: $black !default;
+$nav-link-color-hover: $green !default;
+
+$disabled-gray: #CCCCCC !default;
+
+
+$box-shadow-left: 0;
+$box-shadow-top: 0.75rem;
+$box-shadow-spread:2rem;
+$box-shadow-color:rgba($black,0.2);
+
+
+$xs-max: 36rem !default; // Set xs breakpoint's max width - 576px
+$sm-max: 56rem !default; // Set sm breakpoint's max width - 768px // 864px
+$md-max: 64rem !default; // Set md breakpoint's max width - 1024px
+$lg-max: 72rem !default; // Set lg breakpoint's max width: - 1280px
+
+
+$sm-start: ($xs-max + 0.0625rem); // Generate sm breakpoint's min width
+$md-start: ($sm-max + 0.0625rem); // Generate md breakpoint's min width
+$lg-start: ($md-max + 0.0625rem); // Generate lg breakpoint's min width
+$xl-start: ($lg-max + 0.0625rem); // Generate xl breakpoint's min width
+
+
+
+
+// Breakpoints
+// Create breakpoint range statements to be used in media queries
+$breakpoint-xs-only: "only screen and (max-width: #{$xs-max})"; // 0 -> xs-max range
+$breakpoint-sm-up: "only screen and (min-width: #{$sm-start})"; // sm-start -> up range
+$breakpoint-sm-only: "only screen and (min-width: #{$sm-start}) and (max-width: #{$sm-max})"; // sm-start -> sm-max range
+$breakpoint-md-up: "only screen and (min-width: #{$md-start})"; // md-start -> up range
+$breakpoint-md-only: "only screen and (min-width: #{$md-start}) and (max-width: #{$md-max})"; // md-start -> md-max range
+$breakpoint-lg-up: "only screen and (min-width: #{$lg-start})"; // lg-start -> up range
+$breakpoint-lg-only: "only screen and (min-width: #{$lg-start}) and (max-width: #{$lg-max})"; // lg-start -> lg-max range
+$breakpoint-xl-up: "only screen and (min-width: #{$xl-start})"; // xl-start -> up range
+
+$breakpoints-all: ($breakpoint-xs-only, $breakpoint-sm-up, $breakpoint-sm-only, $breakpoint-md-up, $breakpoint-md-only, $breakpoint-lg-up, $breakpoint-lg-only, $breakpoint-xl-up);
+$breakpoint-ups: ($breakpoint-sm-up, $breakpoint-md-up, $breakpoint-lg-up, $breakpoint-xl-up);
+$breakpoint-all-prefixes: ("xs", "xs-only", "sm", "sm-only", "md", "md-only", "lg", "lg-only", "xl");
+$breakpoint-up-prefixes: ("xs", "sm", "md", "lg", "xl");

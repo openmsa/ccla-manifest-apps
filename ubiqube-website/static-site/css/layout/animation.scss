@@ -1,0 +1,388 @@
+:root {
+	--green:  #34C186;
+	--white:  #FFFFFF;
+	--navy:  #151B22;
+}
+
+
+
+#animation {
+	position: relative;
+	/*margin:  10rem 0;*/
+	/*border: 2px solid red;*/
+	min-width: 20rem;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	color: $white;
+}
+
+
+.service {
+	display: none;
+}
+
+.service.active {
+	display: block;
+}
+
+	.service .service-icon-container {
+		/*border: 1px solid yellow;*/
+		height: 10rem;
+		width: 10rem;
+		position: relative;
+		margin: 0 auto;
+	}
+
+		.service .service-icon-container .service-icon {
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+			.service .service-icon-container .service-icon img {
+				vertical-align: top;
+				display: block;
+				margin: 0 auto;
+				width: 100%;
+			}
+
+		.service .service-icon-container .service-icon-updated {
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			opacity: 0;
+		}
+
+			.service .service-icon-container .service-icon-updated img {
+				vertical-align: top;
+				display: block;
+				margin: 0 auto;
+				width: 100%;
+			}
+
+	.service .service-text {
+		text-align: center;
+		line-height: 150%;
+		font-size: 150%;
+	}
+
+	.service .service-solution {
+		text-align: center;
+		line-height: 150%;
+		font-weight: bold;
+		color: var(--green);
+		opacity: 0;
+		font-size: 150%;
+	}
+
+.service.active {
+	animation: SlideUpandOut 5s ease-in-out 0s 1 normal forwards;
+}
+
+.service.active .service-icon-container .service-icon {
+	animation: FadeOut 500ms ease-in-out 2s 1 normal forwards;
+}
+
+.service.active .service-icon-container .service-icon-updated {
+	animation: FadeIn 500ms ease-in-out 2s 1 normal forwards;
+}
+
+.service.active .service-solution {
+	animation: SlideUp 500ms ease-in-out 2s 1 normal forwards;
+}
+
+
+
+/* Brand Screen */
+
+
+.brand {
+	display: none;
+}
+
+.brand.active {
+	display: block;
+}
+
+
+	.brand .brand-icon-container {
+		height: 10rem;
+		width: 10rem;
+		position: relative;
+		margin: 0 auto;
+		overflow: hidden;
+		/*border-radius: 12rem;*/
+	}
+
+		.brand .brand-icon-container .brand-circle-outer {
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #46587E;
+			border-radius: 50rem;
+			opacity: 0;
+		}
+		.brand .brand-icon-container .brand-circle-inner-1 {
+			position: absolute;
+			left: 20%;
+			top: 20%;
+			right: 10%;
+			bottom: 10%;
+			background-color: #58F0B0;
+			border-radius: 50rem;
+			opacity: 0;
+		}
+		.brand .brand-icon-container .brand-circle-inner-2 {
+			position: absolute;
+			left: 10%;
+			top: 10%;
+			right: 20%;
+			bottom: 20%;
+			background-color: #34C186;
+			border-radius: 50rem;
+			opacity: 0;
+		}
+		.brand .brand-icon-container .brand-circle-middle {
+			position: absolute;
+			left: 20%;
+			top: 20%;
+			right: 20%;
+			bottom: 20%;
+			opacity: 0;
+		}
+
+			.brand .brand-icon-container .brand-circle-middle img {
+				width: 100%;
+			}
+
+		.brand.active .brand-icon-container .brand-identity {
+			position: absolute;
+			left: 0%;
+			top: 0%;
+			right: 0%;
+			bottom: 0%;
+			opacity: 0;
+		}
+
+			.brand.active .brand-icon-container .brand-identity img {
+				width: 100%;
+			}
+
+	.brand .brand-text {
+		text-align: center;
+		line-height: 150%;
+		font-size: 200%;
+		margin-top: 1rem;
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+
+	.brand .brand-tagline {
+		text-align: center;
+		line-height: 150%;
+		font-size: 100%;
+		font-weight: normal;
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+
+.brand.active .brand-icon-container .brand-circle-outer {
+	animation: FadeInGrow 500ms ease-in-out 0s 1 normal forwards;
+}
+
+.brand.active .brand-icon-container .brand-circle-inner-1 {
+	animation: SlideDiagonalUp 500ms ease-in-out 0s 1 normal forwards;
+}
+
+.brand.active .brand-icon-container .brand-circle-inner-2 {
+	animation: SlideDiagonalDown 500ms ease-in-out 0s 1 normal forwards;
+}
+
+.brand.active .brand-icon-container .brand-circle-middle {
+	animation: FadeInGrow 500ms ease-in-out 0s 1 normal forwards;
+}
+
+.brand.active .brand-icon-container .brand-identity {
+	animation: FadeInGrow 500ms ease-in-out 0s 1 normal forwards;
+}
+
+
+
+.brand.active .brand-text {
+	animation: SlideUp 500ms ease-in-out 1s 1 normal forwards;
+}
+
+.brand.active .brand-text strong {
+	color: var(--green);
+}
+
+.brand.active .brand-tagline {
+	animation: SlideUp 500ms ease-in-out 1.5s 1 normal forwards;
+}
+
+.brand.active {
+	animation: SlideUpandOut 10s ease-in-out 0s 1 normal forwards;
+}
+
+
+#check-container {
+	opacity: 0;
+}
+
+#check-container.active {
+	animation: SlideUp 500ms ease-in-out 0s 1 normal forwards;
+}
+
+@keyframes FadeInGrow {
+	0% {
+		opacity: 0;
+		transform: scale(0.1);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+
+@keyframes FadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+
+@keyframes FadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes SlideUp {
+	0% {
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes SlideDiagonalUp {
+	0% {
+		opacity: 0;
+		transform: translate(4rem,4rem);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0,0);
+	}
+}
+
+@keyframes SlideDiagonalDown {
+	0% {
+		opacity: 0;
+		transform: translate(-4rem,-4rem);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0,0);
+	}
+}
+
+
+
+@keyframes SlideUpandOut {
+	0% {
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+
+	10% {
+		opacity: 1;
+		transform: translateY(0rem);
+	}
+
+	90% {
+		opacity: 1;
+		transform: translateY(0rem);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+
+
+.check-container {
+	font-size: 0;
+	text-align: center;
+	margin: 2rem 0;
+	display: block;
+}
+
+.check-container .check {
+	font-size: 1rem;
+	display: inline-block;
+	margin: 0 0.25rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	/*opacity: 0;*/
+	position: relative;
+}
+
+	.check-container .check:after {
+		content: '';
+		height: 0.5rem;
+		width: 0.5rem;
+		background-color: rgba($white,0.2);
+		display: block;
+		border-radius: 1rem;
+		left: 50%;
+		top: 50%;
+		margin-top: -0.25rem;
+		margin-left: -0.25rem;
+		position: absolute;
+	}
+
+	.check-container .check.active {
+		animation: FadeInGrow 250ms ease-in-out 0s 1 normal forwards;
+	}
+
+	.check-container .check img {
+		width: 100%;
+		vertical-align: top;
+		opacity: 0;
+	}
+
+	.check-container .check.active img {
+		opacity: 1;
+	}
+
+	.check-container .check.active:after {
+		opacity: 0;
+	}
