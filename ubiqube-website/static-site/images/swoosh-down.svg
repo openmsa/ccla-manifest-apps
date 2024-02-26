@@ -1,0 +1,18 @@
+
+
+
+
+<svg id="swoosh-up" preserveAspectRatio="none" x="0px" y="0px" viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="enable-background:new 0 0 1440 64;" xml:space="preserve">
+	<style type="text/css">
+	    .layer-top {fill: transparent;}
+	    .layer-middle {fill: #FFFFFF;}
+	    .layer-bottom {fill: #34C186;}
+	</style>
+
+	<path class="layer-top" d="M0 64H1440V29.6725C1292.81 50.4117 1024.69 61.3306 718.604 55.9879C699.41 55.6528 680.367 55.2591 661.497 54.809C380.513 52.968 137.527 37.9666 0 16.2296V64Z" />
+	<path class="layer-middle" d="M0 16.2296V0H1440V16.2296C1293.01 39.4619 1025.56 55 720 55C414.441 55 146.988 39.4619 0 16.2296Z" />
+	<path class="layer-bottom" d="M1440 29.6726V16.2296C1293.01 39.462 1025.56 55.0001 720 55.0001C700.334 55.0001 680.825 54.9357 661.497 54.809C680.367 55.2592 699.41 55.6529 718.604 55.9879C1024.69 61.3307 1292.81 50.4118 1440 29.6726Z"/>
+	
+
+</svg>
+
