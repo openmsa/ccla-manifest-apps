@@ -88,9 +88,7 @@ volumes:
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-  - name: static-files
-    mountPath: /usr/share/nginx/html
+volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
