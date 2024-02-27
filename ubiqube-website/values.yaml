@@ -80,6 +80,7 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
+  - name: static-files
     emptyDir: {}
 # - name: foo
 #   secret:
@@ -88,6 +89,8 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
+  - name: static-files
+    mountPath: /usr/share/nginx/html
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
