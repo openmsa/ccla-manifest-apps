@@ -5,12 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: ubiqubeccla/ubiqube-website
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
-imagePullSecrets: []
+imagePullSecrets:
+ - name: my-registry-secret
 nameOverride: ""
 fullnameOverride: ""
 
