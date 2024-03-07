@@ -5,13 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: ubiqubeccla/ubiqube-website
+  repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
-imagePullSecrets:
- - name: my-registry-secret
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -81,7 +80,7 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: static-files
+  - name: static-site
     emptyDir: {}
 # - name: foo
 #   secret:
@@ -90,7 +89,7 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
-  - name: static-files
+  - name: static-site
     mountPath: /usr/share/nginx/html
 # - name: foo
 #   mountPath: "/etc/foo"
