@@ -88,7 +88,7 @@ volumes:
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
   - name: static-site
     mountPath: /usr/share/nginx/html
 # - name: foo
