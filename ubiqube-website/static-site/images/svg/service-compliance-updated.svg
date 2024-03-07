@@ -1,9 +1,0 @@
-<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M80 40H160M56 80H136M56 96H96M56 128H136M56 144H96M56 176H136M56 192H96M48 228H192C196.418 228 200 224.418 200 220V20C200 15.5817 196.418 12 192 12H48C43.5817 12 40 15.5817 40 20V220C40 224.418 43.5817 228 48 228Z" stroke="white" stroke-width="4" stroke-linecap="round"/>
-<rect x="152" y="72" width="33" height="33" rx="4" stroke="#34C186" stroke-width="4"/>
-<rect x="152" y="120" width="33" height="33" rx="4" stroke="#34C186" stroke-width="4"/>
-<rect x="152" y="168" width="33" height="33" rx="4" stroke="#34C186" stroke-width="4"/>
-<path d="M160 184L166 190L178 178" stroke="#34C186" stroke-width="4" stroke-linecap="round"/>
-<path d="M160 136L166 142L178 130" stroke="#34C186" stroke-width="4" stroke-linecap="round"/>
-<path d="M160 88L166 94L178 82" stroke="#34C186" stroke-width="4" stroke-linecap="round"/>
-</svg>
